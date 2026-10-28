@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AgroCampo Huila: fertilizantes, bioinsumos, herramientas y asesoría agrícola para productores del Huila.">
+  <meta name="theme-color" content="#1E4620">
+  <title>AgroCampo Huila | Insumos y asesoría para el campo</title>
+
+  <!-- Fuentes: Montserrat para títulos e Inter para textos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS 4 Play CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-campo: #EA580C;
+      --color-campo-light: #2F6B35;
+      --color-menta: #F4F7F4;
+      --color-ambar: #D97706;
+      --color-exito: #16A34A;
+      --color-error: #DC2626;
+      --color-advertencia: #CA8A04;
+      --font-heading: "Montserrat", sans-serif;
+      --font-body: "Inter", sans-serif;
+    }
+  </style>
+  <style>
+    :root { color-scheme: light; }
+    html.dark { color-scheme: dark; }
+    body { font-family: "Inter", sans-serif; }
+    h1, h2, h3, .font-heading { font-family: "Montserrat", sans-serif; }
+    .dark body { background: #0F172A; color: #F4F7F4; }
+    .dark .surface { background-color: #172235; border-color: #334155; }
+    .dark .muted { color: #CBD5E1; }
+    .dark .section-soft { background-color: #111D2E; }
+    .dark .field { background-color: #111D2E; color: #F8FAFC; border-color: #475569; }
+    .dark .field::placeholder { color: #94A3B8; }
+    .hero-bg {
+      background-image: linear-gradient(90deg, rgba(10, 28, 13, .88), rgba(10, 28, 13, .52)),
+        url("https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=2000&q=85");
+      background-position: center;
+      background-size: cover;
+    }
+    .focus-ring:focus-visible { outline: 3px solid #D97706; outline-offset: 3px; }
+    .faq-panel[hidden] { display: none; }
+    .toast-enter { animation: toast-in .25s ease-out both; }
+    @keyframes toast-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body class="bg-menta text-slate-800 antialiased">
+  <a href="#contenido" class="focus-ring sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-campo">Saltar al contenido principal</a>
+
+  <!-- 1. Navbar fija y menú móvil -->
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/20 bg-white/95 shadow-sm backdrop-blur-md dark:bg-slate-900/95">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Navegación principal">
+      <a href="#inicio" class="focus-ring flex items-center gap-2 rounded-lg" aria-label="AgroCampo Huila, ir al inicio">
+        <span class="grid h-10 w-10 place-items-center rounded-xl bg-campo text-xl text-white" aria-hidden="true">🌱</span>
+        <span class="font-heading text-lg font-extrabold leading-tight text-campo dark:text-white sm:text-xl">AgroCampo <span class="text-ambar">Huila</span></span>
+      </a>
+
+      <div id="nav-links" class="absolute left-0 right-0 top-full hidden flex-col gap-1 border-b border-slate-200 bg-white px-4 py-4 shadow-lg dark:border-slate-700 dark:bg-slate-900 md:static md:flex md:flex-row md:items-center md:gap-5 md:border-0 md:bg-transparent md:p-0 md:shadow-none">
+        <a class="nav-link focus-ring rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:text-campo dark:text-slate-200 dark:hover:text-amber-400" href="#inicio">Inicio</a>
+        <a class="nav-link focus-ring rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:text-campo dark:text-slate-200 dark:hover:text-amber-400" href="#nosotros">Nosotros</a>
+        <a class="nav-link focus-ring rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:text-campo dark:text-slate-200 dark:hover:text-amber-400" href="#catalogo">Catálogo</a>
+        <a class="nav-link focus-ring rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:text-campo dark:text-slate-200 dark:hover:text-amber-400" href="#preguntas">Preguntas frecuentes</a>
+        <a class="nav-link focus-ring rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:text-campo dark:text-slate-200 dark:hover:text-amber-400" href="#contacto">Contacto</a>
+        <div class="mt-2 flex items-center gap-2 md:mt-0">
+          <button id="theme-toggle" type="button" class="focus-ring flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:border-slate-600 dark:text-white dark:hover:bg-slate-800" aria-label="Activar modo oscuro" title="Cambiar tema">
+            <span id="theme-icon" aria-hidden="true">🌙</span><span class="md:hidden lg:inline">Tema</span>
+          </button>
+          <a href="#contacto" class="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg bg-ambar px-4 py-2 text-sm font-bold text-white transition hover:bg-amber-700">Cotizar</a>
+        </div>
+      </div>
+
+      <button id="menu-toggle" type="button" class="focus-ring grid h-11 w-11 place-items-center rounded-lg border border-slate-300 text-2xl text-campo transition hover:bg-slate-100 dark:border-slate-600 dark:text-white dark:hover:bg-slate-800 md:hidden" aria-label="Abrir menú de navegación" aria-controls="nav-links" aria-expanded="false">
+        <span id="menu-icon" aria-hidden="true">☰</span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    <!-- 2. Hero principal -->
+    <section id="inicio" class="hero-bg flex min-h-[88vh] scroll-mt-20 items-center pt-20 text-white">
+      <div class="mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-32">
+        <div class="max-w-3xl">
+          <p class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/25 px-4 py-2 text-sm font-semibold tracking-wide text-amber-300">
+            <span aria-hidden="true">🌿</span> Aliados del campo huilense
+          </p>
+          <h1 class="font-heading text-4xl font-extrabold leading-tight sm:text-5xl lg:text-7xl">Cultivamos contigo el futuro del <span class="text-amber-300">campo opita.</span></h1>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-white sm:text-xl">Insumos agrícolas, bioinsumos y asesoría cercana para que tus cultivos crezcan fuertes y tu trabajo dé mejores frutos.</p>
+          <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a href="#catalogo" class="focus-ring inline-flex min-h-12 items-center justify-center rounded-xl bg-ambar px-7 py-3 font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-amber-700">Ver catálogo <span class="ml-2" aria-hidden="true">→</span></a>
+            <a href="#contacto" class="focus-ring inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-white px-7 py-3 font-bold text-white transition hover:bg-white hover:text-campo">Solicitar asesoría</a>
+          </div>
+          <div class="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium text-white/90">
+            <span>✓ Atención personalizada</span><span>✓ Soluciones para tus cultivos</span><span>✓ Compromiso regional</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Nosotros / Por qué elegirnos -->
+    <section id="nosotros" class="scroll-mt-20 py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 md:grid-cols-2 md:gap-14 lg:px-8">
+        <div>
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.18em] text-ambar">Nuestra razón de ser</p>
+          <h2 class="font-heading text-3xl font-extrabold leading-tight text-campo dark:text-white sm:text-4xl">Crecemos cuando crece el campo del Huila.</h2>
+          <p class="muted mt-5 text-base leading-8 text-slate-600">En AgroCampo Huila acompañamos a agricultores y caficultores con productos seleccionados y orientación práctica para cada etapa del cultivo. Creemos en el conocimiento del campesino, el cuidado del suelo y el valor de producir alimentos de calidad.</p>
+          <p class="muted mt-4 text-base leading-8 text-slate-600">Queremos ser un aliado de confianza: escuchamos tus necesidades y te ayudamos a encontrar alternativas adecuadas para tu finca, tu presupuesto y tus objetivos.</p>
+          <div class="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div class="flex gap-3 rounded-xl border border-green-100 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <span class="text-2xl" aria-hidden="true">🤝</span><div><h3 class="font-heading font-bold text-campo dark:text-white">Asesoría cercana</h3><p class="muted mt-1 text-sm text-slate-600">Orientación clara y humana.</p></div>
+            </div>
+            <div class="flex gap-3 rounded-xl border border-green-100 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <span class="text-2xl" aria-hidden="true">🌎</span><div><h3 class="font-heading font-bold text-campo dark:text-white">Compromiso con la tierra</h3><p class="muted mt-1 text-sm text-slate-600">Opciones para cuidar el cultivo.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <img class="h-72 w-full rounded-3xl object-cover shadow-xl sm:h-96" src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1200&q=85" alt="Agricultor trabajando entre hileras de un cultivo verde" loading="lazy">
+          <div class="absolute -bottom-5 left-4 right-4 rounded-2xl bg-campo p-5 text-white shadow-lg sm:left-8 sm:right-8 sm:p-6">
+            <p class="font-heading text-lg font-bold">Del Huila para el Huila</p>
+            <p class="mt-1 text-sm leading-6 text-white/90">Apoyamos a quienes hacen del campo una fuente de vida y desarrollo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Catálogo de insumos agrícolas -->
+    <section id="catalogo" class="section-soft scroll-mt-20 bg-white py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.18em] text-ambar">Soluciones para tu finca</p>
+          <h2 class="font-heading text-3xl font-extrabold text-campo dark:text-white sm:text-4xl">Catálogo de insumos</h2>
+          <p class="muted mt-4 leading-7 text-slate-600">Conoce algunos productos destacados. Añádelos a tu solicitud y te ayudaremos a confirmar disponibilidad y precio final.</p>
+        </div>
+
+        <div id="quote-selection" class="mt-8 hidden rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-900 dark:border-green-900 dark:bg-green-950 dark:text-green-100" role="status" aria-live="polite">
+          <div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+            <p><strong id="selection-count">0</strong> producto(s) seleccionados para cotizar: <span id="selection-list"></span></p>
+            <button id="clear-selection" type="button" class="focus-ring self-start rounded-lg border border-green-800 px-3 py-2 font-semibold hover:bg-green-100 dark:hover:bg-green-900 sm:self-auto">Limpiar selección</button>
+          </div>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="surface group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div class="relative overflow-hidden"><img class="h-56 w-full object-cover transition duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=900&q=80" alt="Abono granulado para nutrición de plantas" loading="lazy"><span class="absolute left-4 top-4 rounded-full bg-campo px-3 py-1 text-xs font-bold text-white">Fertilizantes</span></div>
+            <div class="p-6"><h3 class="font-heading text-xl font-bold text-campo dark:text-white">Fertilizante NPK</h3><p class="muted mt-2 min-h-12 text-sm leading-6 text-slate-600">Mezcla de nutrientes para apoyar el desarrollo y la producción del cultivo.</p><p class="mt-5 text-2xl font-extrabold text-campo dark:text-green-300">$85.000 <span class="text-sm font-medium text-slate-500 dark:text-slate-400">COP / bulto*</span></p><button type="button" class="add-quote focus-ring mt-5 min-h-11 w-full rounded-xl bg-campo px-4 py-3 font-bold text-white transition hover:bg-green-800" data-product="Fertilizante NPK">Añadir a cotización</button></div>
+          </article>
+
+          <article class="surface group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div class="relative overflow-hidden"><img class="h-56 w-full object-cover transition duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=900&q=80" alt="Plantas jóvenes y productos para el cuidado de cultivos" loading="lazy"><span class="absolute left-4 top-4 rounded-full bg-campo px-3 py-1 text-xs font-bold text-white">Bioinsumos</span></div>
+            <div class="p-6"><h3 class="font-heading text-xl font-bold text-campo dark:text-white">Bioestimulante vegetal</h3><p class="muted mt-2 min-h-12 text-sm leading-6 text-slate-600">Alternativa para acompañar el crecimiento y vigor de las plantas.</p><p class="mt-5 text-2xl font-extrabold text-campo dark:text-green-300">$62.000 <span class="text-sm font-medium text-slate-500 dark:text-slate-400">COP / litro*</span></p><button type="button" class="add-quote focus-ring mt-5 min-h-11 w-full rounded-xl bg-campo px-4 py-3 font-bold text-white transition hover:bg-green-800" data-product="Bioestimulante vegetal">Añadir a cotización</button></div>
+          </article>
+
+          <article class="surface group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div class="relative overflow-hidden"><img class="h-56 w-full object-cover transition duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1599685315640-9ecf2a9a5b9e?auto=format&fit=crop&w=900&q=80" alt="Herramientas agrícolas manuales para labores de finca" loading="lazy"><span class="absolute left-4 top-4 rounded-full bg-campo px-3 py-1 text-xs font-bold text-white">Herramientas</span></div>
+            <div class="p-6"><h3 class="font-heading text-xl font-bold text-campo dark:text-white">Kit de herramientas</h3><p class="muted mt-2 min-h-12 text-sm leading-6 text-slate-600">Herramientas prácticas para labores de mantenimiento en la finca.</p><p class="mt-5 text-2xl font-extrabold text-campo dark:text-green-300">$49.900 <span class="text-sm font-medium text-slate-500 dark:text-slate-400">COP / kit*</span></p><button type="button" class="add-quote focus-ring mt-5 min-h-11 w-full rounded-xl bg-campo px-4 py-3 font-bold text-white transition hover:bg-green-800" data-product="Kit de herramientas">Añadir a cotización</button></div>
+          </article>
+
+          <article class="surface group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div class="relative overflow-hidden"><img class="h-56 w-full object-cover transition duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=900&q=80" alt="Cultivo verde que representa productos para nutrición del suelo" loading="lazy"><span class="absolute left-4 top-4 rounded-full bg-campo px-3 py-1 text-xs font-bold text-white">Suelos</span></div>
+            <div class="p-6"><h3 class="font-heading text-xl font-bold text-campo dark:text-white">Enmienda para suelos</h3><p class="muted mt-2 min-h-12 text-sm leading-6 text-slate-600">Producto para ayudar a mejorar las condiciones del suelo según análisis.</p><p class="mt-5 text-2xl font-extrabold text-campo dark:text-green-300">$38.000 <span class="text-sm font-medium text-slate-500 dark:text-slate-400">COP / unidad*</span></p><button type="button" class="add-quote focus-ring mt-5 min-h-11 w-full rounded-xl bg-campo px-4 py-3 font-bold text-white transition hover:bg-green-800" data-product="Enmienda para suelos">Añadir a cotización</button></div>
+          </article>
+
+          <article class="surface group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div class="relative overflow-hidden"><img class="h-56 w-full object-cover transition duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1592982537447-6f2a6a0a4f5e?auto=format&fit=crop&w=900&q=80" alt="Plántulas en bandejas listas para el cultivo" loading="lazy"><span class="absolute left-4 top-4 rounded-full bg-campo px-3 py-1 text-xs font-bold text-white">Cultivo</span></div>
+            <div class="p-6"><h3 class="font-heading text-xl font-bold text-campo dark:text-white">Bandeja de germinación</h3><p class="muted mt-2 min-h-12 text-sm leading-6 text-slate-600">Apoya el establecimiento y cuidado inicial de plántulas.</p><p class="mt-5 text-2xl font-extrabold text-campo dark:text-green-300">$18.500 <span class="text-sm font-medium text-slate-500 dark:text-slate-400">COP / unidad*</span></p><button type="button" class="add-quote focus-ring mt-5 min-h-11 w-full rounded-xl bg-campo px-4 py-3 font-bold text-white transition hover:bg-green-800" data-product="Bandeja de germinación">Añadir a cotización</button></div>
+          </article>
+
+          <article class="surface group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+            <div class="relative overflow-hidden"><img class="h-56 w-full object-cover transition duration-500 group-hover:scale-105" src="https://images.unsplash.com/photo-1595841696677-6489ff3f8cd1?auto=format&fit=crop&w=900&q=80" alt="Plantas de café en un cultivo agrícola" loading="lazy"><span class="absolute left-4 top-4 rounded-full bg-campo px-3 py-1 text-xs font-bold text-white">Caficultura</span></div>
+            <div class="p-6"><h3 class="font-heading text-xl font-bold text-campo dark:text-white">Nutrición para café</h3><p class="muted mt-2 min-h-12 text-sm leading-6 text-slate-600">Opción de nutrición para cafetales, ajustada a la etapa del cultivo.</p><p class="mt-5 text-2xl font-extrabold text-campo dark:text-green-300">$92.000 <span class="text-sm font-medium text-slate-500 dark:text-slate-400">COP / bulto*</span></p><button type="button" class="add-quote focus-ring mt-5 min-h-11 w-full rounded-xl bg-campo px-4 py-3 font-bold text-white transition hover:bg-green-800" data-product="Nutrición para café">Añadir a cotización</button></div>
+          </article>
+        </div>
+        <p class="muted mt-6 text-center text-xs leading-5 text-slate-500">*Precios ilustrativos para esta demostración. Consulta disponibilidad, presentación y precio actualizado antes de comprar. Utiliza los productos según su etiqueta y recomendación técnica.</p>
+      </div>
+    </section>
+
+    <!-- 5. Preguntas frecuentes con acordeón -->
+    <section id="preguntas" class="scroll-mt-20 py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <div class="mb-10 text-center">
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.18em] text-ambar">Te ayudamos</p>
+          <h2 class="font-heading text-3xl font-extrabold text-campo dark:text-white sm:text-4xl">Preguntas frecuentes</h2>
+          <p class="muted mt-4 text-slate-600">Resolvemos algunas dudas comunes antes de hacer tu pedido.</p>
+        </div>
+        <div class="space-y-3">
+          <div class="surface rounded-xl border border-slate-200 bg-white">
+            <h3><button class="faq-toggle focus-ring flex min-h-16 w-full items-center justify-between gap-4 rounded-xl px-5 py-4 text-left font-bold text-slate-800 dark:text-white" aria-expanded="false" aria-controls="faq-1"><span>¿Cómo puedo realizar un pedido?</span><span class="faq-symbol text-xl text-ambar" aria-hidden="true">+</span></button></h3>
+            <div id="faq-1" class="faq-panel px-5 pb-5 text-sm leading-7 text-slate-600 dark:text-slate-300" hidden>Puedes añadir los productos al listado de cotización y completar el formulario. Nuestro equipo podrá contactarte para confirmar cantidades, disponibilidad y precio final.</div>
+          </div>
+          <div class="surface rounded-xl border border-slate-200 bg-white">
+            <h3><button class="faq-toggle focus-ring flex min-h-16 w-full items-center justify-between gap-4 rounded-xl px-5 py-4 text-left font-bold text-slate-800 dark:text-white" aria-expanded="false" aria-controls="faq-2"><span>¿Realizan envíos a municipios del Huila?</span><span class="faq-symbol text-xl text-ambar" aria-hidden="true">+</span></button></h3>
+            <div id="faq-2" class="faq-panel px-5 pb-5 text-sm leading-7 text-slate-600 dark:text-slate-300" hidden>Podemos revisar opciones de entrega en Neiva y otros municipios del Huila. La cobertura, el costo y el tiempo dependen de la ubicación y del tipo de producto; confírmalos al solicitar la cotización.</div>
+          </div>
+          <div class="surface rounded-xl border border-slate-200 bg-white">
+            <h3><button class="faq-toggle focus-ring flex min-h-16 w-full items-center justify-between gap-4 rounded-xl px-5 py-4 text-left font-bold text-slate-800 dark:text-white" aria-expanded="false" aria-controls="faq-3"><span>¿Puedo recibir asesoría para mi cultivo de café?</span><span class="faq-symbol text-xl text-ambar" aria-hidden="true">+</span></button></h3>
+            <div id="faq-3" class="faq-panel px-5 pb-5 text-sm leading-7 text-slate-600 dark:text-slate-300" hidden>Sí. Cuéntanos el municipio, el tipo de cultivo y la necesidad que tienes. Te orientaremos sobre las opciones disponibles y, cuando sea necesario, te recomendaremos consultar a un profesional agrónomo.</div>
+          </div>
+          <div class="surface rounded-xl border border-slate-200 bg-white">
+            <h3><button class="faq-toggle focus-ring flex min-h-16 w-full items-center justify-between gap-4 rounded-xl px-5 py-4 text-left font-bold text-slate-800 dark:text-white" aria-expanded="false" aria-controls="faq-4"><span>¿Qué garantías tienen los productos?</span><span class="faq-symbol text-xl text-ambar" aria-hidden="true">+</span></button></h3>
+            <div id="faq-4" class="faq-panel px-5 pb-5 text-sm leading-7 text-slate-600 dark:text-slate-300" hidden>Las condiciones dependen del producto y de su fabricante. Conserva la factura y el empaque, y contáctanos si detectas una novedad para revisar el caso conforme a las condiciones aplicables.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Formulario de cotización con validación -->
+    <section id="contacto" class="section-soft scroll-mt-20 bg-white py-16 sm:py-20 lg:py-24">
+      <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-[.8fr_1.2fr] md:gap-14 lg:px-8">
+        <div>
+          <p class="mb-3 text-sm font-bold uppercase tracking-[.18em] text-ambar">Hablemos de tu cultivo</p>
+          <h2 class="font-heading text-3xl font-extrabold leading-tight text-campo dark:text-white sm:text-4xl">Solicita tu cotización</h2>
+          <p class="muted mt-5 leading-8 text-slate-600">Dinos qué necesitas y en qué municipio estás. Prepara tu solicitud en pocos pasos y nuestro equipo podrá orientarte.</p>
+          <div class="mt-8 space-y-5">
+            <div class="flex items-start gap-4"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-green-100 text-xl" aria-hidden="true">📍</span><div><h3 class="font-bold text-campo dark:text-white">Visítanos</h3><p class="muted mt-1 text-sm text-slate-600">Neiva, Huila, Colombia</p></div></div>
+            <div class="flex items-start gap-4"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-green-100 text-xl" aria-hidden="true">📞</span><div><h3 class="font-bold text-campo dark:text-white">Llámanos</h3><p class="muted mt-1 text-sm text-slate-600">+57 (608) 000 0000</p></div></div>
+            <div class="flex items-start gap-4"><span class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-green-100 text-xl" aria-hidden="true">✉️</span><div><h3 class="font-bold text-campo dark:text-white">Escríbenos</h3><p class="muted mt-1 text-sm text-slate-600">contacto@agrocampohuila.com</p></div></div>
+          </div>
+        </div>
+
+        <form id="quote-form" class="surface rounded-2xl border border-slate-200 bg-white p-5 shadow-lg sm:p-8" novalidate>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="nombre" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-100">Nombre completo <span class="text-error" aria-hidden="true">*</span></label>
+              <input id="nombre" name="nombre" type="text" autocomplete="name" required minlength="3" class="field min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-ambar" placeholder="Tu nombre">
+              <p class="field-error mt-1 text-sm text-error" id="nombre-error" aria-live="polite"></p>
+            </div>
+            <div>
+              <label for="correo" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-100">Correo electrónico <span class="text-error" aria-hidden="true">*</span></label>
+              <input id="correo" name="correo" type="email" autocomplete="email" required class="field min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-ambar" placeholder="nombre@correo.com">
+              <p class="field-error mt-1 text-sm text-error" id="correo-error" aria-live="polite"></p>
+            </div>
+            <div>
+              <label for="municipio" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-100">Municipio del Huila <span class="text-error" aria-hidden="true">*</span></label>
+              <select id="municipio" name="municipio" required class="field min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-ambar">
+                <option value="">Selecciona tu municipio</option>
+                <option>Acevedo</option><option>Agrado</option><option>Aipe</option><option>Algeciras</option><option>Altamira</option><option>Baraya</option><option>Campoalegre</option><option>Colombia</option><option>Elías</option><option>Garzón</option><option>Gigante</option><option>Guadalupe</option><option>Hobo</option><option>Íquira</option><option>Isnos</option><option>La Argentina</option><option>La Plata</option><option>Nátaga</option><option>Neiva</option><option>Oporapa</option><option>Paicol</option><option>Palermo</option><option>Palestina</option><option>Pital</option><option>Pitalito</option><option>Rivera</option><option>Saladoblanco</option><option>San Agustín</option><option>Santa María</option><option>Suaza</option><option>Tarqui</option><option>Tello</option><option>Teruel</option><option>Timaná</option><option>Villavieja</option><option>Yaguará</option>
+              </select>
+              <p class="field-error mt-1 text-sm text-error" id="municipio-error" aria-live="polite"></p>
+            </div>
+            <div>
+              <label for="categoria" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-100">Categoría de interés <span class="text-error" aria-hidden="true">*</span></label>
+              <select id="categoria" name="categoria" required class="field min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-ambar">
+                <option value="">Selecciona una categoría</option><option>Fertilizantes</option><option>Bioinsumos</option><option>Herramientas agrícolas</option><option>Productos para caficultura</option><option>Asesoría agrícola</option><option>Otro</option>
+              </select>
+              <p class="field-error mt-1 text-sm text-error" id="categoria-error" aria-live="polite"></p>
+            </div>
+            <div class="sm:col-span-2">
+              <label for="comentarios" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-100">Comentarios <span class="font-normal text-slate-500">(opcional)</span></label>
+              <textarea id="comentarios" name="comentarios" rows="4" class="field w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:outline-none focus:ring-2 focus:ring-ambar" placeholder="Cuéntanos qué cultivo tienes o qué productos necesitas."></textarea>
+              <p class="field-error mt-1 text-sm text-error" id="comentarios-error" aria-live="polite"></p>
+            </div>
+          </div>
+          <p class="muted mt-4 text-xs leading-5 text-slate-500">Los campos marcados con * son obligatorios. Este formulario es una demostración: no envía datos a un servidor.</p>
+          <button type="submit" class="focus-ring mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-ambar px-6 py-3 font-bold text-white transition hover:bg-amber-700 sm:w-auto">Enviar solicitud <span class="ml-2" aria-hidden="true">→</span></button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- 7. Pie de página -->
+  <footer class="bg-slate-950 py-12 text-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid gap-9 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="sm:col-span-2 lg:col-span-1">
+          <a href="#inicio" class="focus-ring inline-flex items-center gap-2 rounded-lg"><span class="text-2xl" aria-hidden="true">🌱</span><span class="font-heading text-xl font-extrabold">AgroCampo <span class="text-amber-400">Huila</span></span></a>
+          <p class="mt-4 max-w-sm text-sm leading-7 text-slate-300">Insumos y acompañamiento para quienes trabajan la tierra y alimentan a nuestra región.</p>
+        </div>
+        <div><h2 class="font-heading text-base font-bold">Contacto</h2><address class="mt-4 space-y-3 text-sm not-italic leading-6 text-slate-300"><p>Dirección: zona comercial, Neiva, Huila</p><p>Teléfono: +57 (608) 000 0000</p><p>Correo: contacto@agrocampohuila.com</p></address></div>
+        <div><h2 class="font-heading text-base font-bold">Horario de atención</h2><div class="mt-4 space-y-2 text-sm leading-6 text-slate-300"><p>Lunes a viernes: 8:00 a. m. – 5:00 p. m.</p><p>Sábados: 8:00 a. m. – 12:00 m.</p><p>Domingos y festivos: cerrado</p></div></div>
+        <div><h2 class="font-heading text-base font-bold">Síguenos</h2><div class="mt-4 flex flex-wrap gap-3"><a class="focus-ring rounded-lg border border-slate-700 px-3 py-2 text-sm font-semibold transition hover:border-amber-400 hover:text-amber-300" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook (se abre en otra pestaña)">Facebook</a><a class="focus-ring rounded-lg border border-slate-700 px-3 py-2 text-sm font-semibold transition hover:border-amber-400 hover:text-amber-300" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (se abre en otra pestaña)">Instagram</a><a class="focus-ring rounded-lg border border-slate-700 px-3 py-2 text-sm font-semibold transition hover:border-amber-400 hover:text-amber-300" href="https://wa.me/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp (se abre en otra pestaña)">WhatsApp</a></div></div>
+      </div>
+      <div class="mt-10 border-t border-slate-800 pt-6 text-center text-xs leading-6 text-slate-400"><p>© <span id="current-year"></span> AgroCampo Huila. Todos los derechos reservados.</p><p>Los datos de contacto y precios de esta maqueta son ilustrativos y deben confirmarse antes de publicar.</p></div>
+    </div>
+  </footer>
+
+  <!-- Toast accesible para confirmaciones -->
+  <div id="toast" class="fixed bottom-5 right-4 z-[100] hidden max-w-sm rounded-xl bg-exito px-5 py-4 text-sm font-semibold text-white shadow-2xl sm:right-6" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- JavaScript puro: menú móvil, tema, acordeón, selección y validación -->
+  <script>
+    "use strict";
+
+    // Menú hamburguesa: abrir/cerrar y cerrar al elegir un enlace.
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+    const menuIcon = document.getElementById("menu-icon");
+
+    function setMenu(open) {
+      navLinks.classList.toggle("hidden", !open);
+      navLinks.classList.toggle("flex", open);
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.setAttribute("aria-label", open ? "Cerrar menú de navegación" : "Abrir menú de navegación");
+      menuIcon.textContent = open ? "✕" : "☰";
+    }
+
+    menuToggle.addEventListener("click", () => {
+      setMenu(menuToggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    document.querySelectorAll(".nav-link, #nav-links a[href='#contacto']").forEach((link) => {
+      link.addEventListener("click", () => setMenu(false));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setMenu(false);
+    });
+
+    // Tema claro/oscuro. Se guarda la preferencia en el navegador si es posible.
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+    const savedTheme = localStorage.getItem("agrocampo-theme");
+    if (savedTheme === "dark") document.documentElement.classList.add("dark");
+
+    function updateThemeButton() {
+      const isDark = document.documentElement.classList.contains("dark");
+      themeIcon.textContent = isDark ? "☀️" : "🌙";
+      themeToggle.setAttribute("aria-label", isDark ? "Activar modo claro" : "Activar modo oscuro");
+    }
+    updateThemeButton();
+
+    themeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.toggle("dark");
+      localStorage.setItem("agrocampo-theme", isDark ? "dark" : "light");
+      updateThemeButton();
+    });
+
+    // Acordeón: permite abrir una pregunta a la vez y funciona con teclado.
+    document.querySelectorAll(".faq-toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        const wasExpanded = button.getAttribute("aria-expanded") === "true";
+        document.querySelectorAll(".faq-toggle").forEach((otherButton) => {
+          otherButton.setAttribute("aria-expanded", "false");
+          otherButton.querySelector(".faq-symbol").textContent = "+";
+          document.getElementById(otherButton.getAttribute("aria-controls")).hidden = true;
+        });
+        if (!wasExpanded) {
+          button.setAttribute("aria-expanded", "true");
+          button.querySelector(".faq-symbol").textContent = "−";
+          document.getElementById(button.getAttribute("aria-controls")).hidden = false;
+        }
+      });
+    });
+
+    // Selección de productos para completar automáticamente los comentarios.
+    const selectedProducts = new Set();
+    const quoteSelection = document.getElementById("quote-selection");
+    const selectionCount = document.getElementById("selection-count");
+    const selectionList = document.getElementById("selection-list");
+    const commentsField = document.getElementById("comentarios");
+
+    function renderSelection() {
+      quoteSelection.classList.toggle("hidden", selectedProducts.size === 0);
+      selectionCount.textContent = String(selectedProducts.size);
+      selectionList.textContent = Array.from(selectedProducts).join(", ");
+      if (selectedProducts.size > 0) {
+        commentsField.value = "Productos de interés: " + Array.from(selectedProducts).join(", ");
+      } else if (commentsField.value.startsWith("Productos de interés: ")) {
+        commentsField.value = "";
+      }
+    }
+
+    document.querySelectorAll(".add-quote").forEach((button) => {
+      button.addEventListener("click", () => {
+        const product = button.dataset.product;
+        if (selectedProducts.has(product)) {
+          selectedProducts.delete(product);
+          button.textContent = "Añadir a cotización";
+          button.classList.remove("bg-amber-700");
+          button.classList.add("bg-campo");
+        } else {
+          selectedProducts.add(product);
+          button.textContent = "Añadido ✓";
+          button.classList.remove("bg-campo");
+          button.classList.add("bg-amber-700");
+        }
+        renderSelection();
+      });
+    });
+
+    document.getElementById("clear-selection").addEventListener("click", () => {
+      selectedProducts.clear();
+      document.querySelectorAll(".add-quote").forEach((button) => {
+        button.textContent = "Añadir a cotización";
+        button.classList.remove("bg-amber-700");
+        button.classList.add("bg-campo");
+      });
+      renderSelection();
+    });
+
+    // Toast flotante: se oculta automáticamente después de cuatro segundos.
+    let toastTimer;
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.remove("hidden");
+      toast.classList.add("toast-enter");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => {
+        toast.classList.add("hidden");
+        toast.classList.remove("toast-enter");
+      }, 6000);
+    }
+
+    // Validación propia: mensajes debajo de cada campo y foco en el primer error.
+    const form = document.getElementById("quote-form");
+    const fields = ["nombre", "correo", "municipio", "categoria"];
+
+    function setFieldError(fieldId, message) {
+      const field = document.getElementById(fieldId);
+      const error = document.getElementById(fieldId + "-error");
+      error.textContent = message;
+      field.setAttribute("aria-invalid", message ? "true" : "false");
+      if (message) field.setAttribute("aria-describedby", error.id);
+      else field.removeAttribute("aria-describedby");
+    }
+
+    function validateField(fieldId) {
+      const field = document.getElementById(fieldId);
+      const value = field.value.trim();
+      let message = "";
+
+      if (!value) {
+        message = "Este campo es obligatorio.";
+      } else if (fieldId === "nombre" && value.length < 3) {
+        message = "Escribe tu nombre completo (mínimo 3 caracteres).";
+      } else if (fieldId === "correo" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+        message = "Ingresa un correo válido, por ejemplo nombre@correo.com.";
+      }
+
+      setFieldError(fieldId, message);
+      return message === "";
+    }
+
+    fields.forEach((fieldId) => {
+      const field = document.getElementById(fieldId);
+      field.addEventListener("blur", () => validateField(fieldId));
+      field.addEventListener("input", () => {
+        if (document.getElementById(fieldId + "-error").textContent) validateField(fieldId);
+      });
+      field.addEventListener("change", () => {
+        if (document.getElementById(fieldId + "-error").textContent) validateField(fieldId);
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let firstInvalidField = null;
+      fields.forEach((fieldId) => {
+        if (!validateField(fieldId) && !firstInvalidField) {
+          firstInvalidField = document.getElementById(fieldId);
+        }
+      });
+
+      if (firstInvalidField) {
+        firstInvalidField.focus();
+        return;
+      }
+
+      // Demo sin backend: no se envían ni almacenan datos personales.
+      showToast("¡Excelente! Tu cotización fue enviada a AgroCampo Huila.");
+      form.reset();
+      fields.forEach((fieldId) => setFieldError(fieldId, ""));
+      selectedProducts.clear();
+      document.querySelectorAll(".add-quote").forEach((button) => {
+        button.textContent = "Añadir a cotización";
+        button.classList.remove("bg-amber-700");
+        button.classList.add("bg-campo");
+      });
+      renderSelection();
+    });
+
+    // Año actualizado automáticamente en el footer.
+    document.getElementById("current-year").textContent = String(new Date().getFullYear());
+  </script>
+</body>
+</html>
